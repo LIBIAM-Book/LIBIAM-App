@@ -1,0 +1,22 @@
+.auth-form-container {
+  width: 90%;
+  max-width: 40rem;
+
+  margin: 0 auto;
+  padding: 1rem;
+
+  text-align: center;
+}
+
+.auth-form-container form {
+  margin-bottom: 1rem;
+}
+
+.auth-btn {
+  margin-top: 2rem;
+}
+
+.profile_preview_size {
+  width: 11rem;
+  height: 11rem;
+}

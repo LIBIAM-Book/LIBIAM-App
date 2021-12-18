@@ -833,21 +833,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-width: 1px;
 }
 
-.border-2 {
-  border-width: 2px;
-}
-
 .border-t-2 {
   border-top-width: 2px;
 }
 
 .border-b-2 {
   border-bottom-width: 2px;
-}
-
-.border-red-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 
 .bg-libiamYellow-light {
@@ -1035,11 +1026,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
-.text-libiamYellow {
-  --tw-text-opacity: 1;
-  color: rgb(248 206 70 / var(--tw-text-opacity));
 }
 
 .placeholder-gray-200::-moz-placeholder {

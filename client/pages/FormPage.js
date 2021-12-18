@@ -80,8 +80,8 @@ const FormPage = (props) => {
     event.preventDefault();
   };
 
-  // 권모형님 성공했습니다!!!! 여기에 제출한 form 의 "이름" 만 뜨게 하는 function입니다.
-  // SUBMIT 버튼 만드실때 이거 넣으시면 이름 value만 출력 가능합니다!
+  // Pulls out only the "Name" value of the inputs.
+  // Triggers when pressing on SUBMIT button.
   const showNameHandler = () => {
     console.log(formState.inputs.name.value);
   };
@@ -536,9 +536,7 @@ const FormPage = (props) => {
 
         {/* End of Form */}
 
-        {/*
-      아래 버튼은 누르면 일단 name 값만 출력 되는지 확인하기 위해 만들었습니다. 
-      submit 버튼 만드실때 교체해 주시면 됩니다! */}
+        {/* Submit Button */}
         <Button
           styles={`${isOpen ? 'block' : 'hidden'} 
             mt-16 p-4 w-64 shadow-lg

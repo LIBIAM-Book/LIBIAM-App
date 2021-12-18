@@ -23,6 +23,12 @@ const formReducer = (state, action) => {
         formIsValid: formIsValid,
       };
 
+    case 'SET_DATA':
+      return {
+        inputs: action.inputs,
+        formIsValid: action.formIsValid,
+      };
+
     case 'WHATS_THE_NAME':
       return {
         inputs: action.inputs,
@@ -51,6 +57,15 @@ export const useForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
+  // edit(update) form data
+  const setFormData = useCallback((inputData, formValidity) => {
+    dispatch({
+      type: 'SET_DATA',
+      inputs: inputData,
+      formIsValid: formValidity,
+    });
+  }, []);
+
   //pass on the name input to chose which story to show FOR DEMO
   const namePulledOutFromFormState = useCallback((nameInput) => {
     dispatch({
@@ -59,5 +74,5 @@ export const useForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
-  return [formState, inputHandler, namePulledOutFromFormState];
+  return [formState, inputHandler, setFormData, namePulledOutFromFormState];
 };
