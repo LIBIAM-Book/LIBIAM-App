@@ -1,0 +1,51 @@
+{
+  "Data": [
+    {
+      "MediaImgUris": [
+        "cartoon_animals_sad/SadKate.PNG.jpg"
+      ], 
+      "Text": "The Adventures of Olivia", 
+      "id": 0, 
+      "pageType": "front"
+    }, 
+    {
+      "MediaImgUris": [
+        "demo/book1.jpeg"
+      ], 
+      "Text": "I KNOW you have all heard of the little Olivia who lived with a tiger in mountain.\n\nJust why she lived with it there I don't exactly remember, but I can't imagine that she used to sleep so comfortably with it.", 
+      "id": 1, 
+      "pageType": "body"
+    }, 
+    {
+      "MediaImgUris": [
+        "demo/book2.jpg", 
+        "fine_arts_hope/i-hope-you-dance-pat-olson-fine-art-and-whimsy.jpg", 
+        "cartoon_animals_sad/SadKate.PNG.jpg", 
+        "sad_animals_fine_arts/images72.jpg"
+      ], 
+      "Text": "WHEN last we heard of Olivia, do you remember?\n\nShe was very fond of her toys, and when they were old enough to play any kind of musical instrument, she would sit down on top of them as soon as she could get hold of one or two large ones; \nthen dart out into the air at full speed, swinging about like a madman's-diamond ball! \n\nAnd so it went on all day long, until at last Marjorie found herself in a great passion. The Tiger and the Bear were very fond of each other, and as soon as they had danced together there was nothing left to be done but go out into the world for entertainment.", 
+      "id": 2, 
+      "pageType": "body"
+    }, 
+    {
+      "MediaImgUris": [
+        "demo/book3.jpg", 
+        "fine_arts_courage/courage--matt-konar.jpg", 
+        "fine_arts_loss/bfe6f05182725ae9f2e8121e6cdb212a.jpg", 
+        "fine_art_blue/images12.jpg"
+      ], 
+      "Text": "Day come on, pink and then  red, and the waves never tired of their ceaseless jigging.\nOne day Mary Erskine wanted to have a little picnic with Stella, who was walking along the beach by the side of the pond, looking up from among the green mosses that covered the mountain shore, which lay just beyond the water's edge. \n\n\"I've never seen anything like it,\" \nsaid Marjorie, \n\n\"and I don't think there's any place in the world more beautiful than this.\" \n\nThen she went on to tell stories about her father and mother, who had died when he was a little girl, and how they used to play mountain-dwellers' games of hide and seek.", 
+      "id": 3, 
+      "pageType": "body"
+    }, 
+    {
+      "MediaImgUris": [
+        "fine_arts_courage/rinthouse-io-c-w-studio-mammal-horse-zebra-modern-painting-acrylic-paint_407.jpeg"
+      ], 
+      "Text": "And some day, \n\nwhen you, too, \n\nhave grown up and have a wonderful tiger and have come into a kingdom of your own, \n\nyou will live-as they lived-happily ever after.", 
+      "id": 4, 
+      "pageType": "end"
+    }
+  ], 
+  "StoryWritingJobStatus": "a string"
+}

@@ -1,0 +1,51 @@
+{ 
+  "Data": [
+    { 
+      "MediaImgUris": [
+        "cartoon_animals_sad/CrossingKate.jpg"
+      ],
+      "Text": "The Adventures of Jessica",
+      "id": 0,
+      "pageType": "front"
+    },
+    { 
+      "MediaImgUris": [
+        "happy_animals_sketch/cartoon-doll-002.jpg"
+      ],
+      "Text": "I KNOW you have all heard of the little Jessica who lived with a gingerbread in kingdom. Just why she lived with it there I don't exactly remember, but I can't imagine that she used to sleep so comfortably with it.",
+      "id": 1,
+      "pageType": "body"
+    },
+    { 
+      "MediaImgUris": [
+        "happy_animals_sketch/images8.jpeg",
+        "cartoon_animals_sad/images162.jpg",
+        "fine_arts_holidays/happy-holidays-snowmen-wes-iversen.jpg",
+        "fine_arts_hope/images26.jpg"
+      ],
+      "Text": "WHEN last we heard of Jessica, do you remember?\n\"\nI don't know what to make of it\"\" said the gingerbread-dressed gentleman; \"but I'm sure there's something in it that makes me giggle.\"\n\"Oh\" yes\"\" said Marjorie\" as she sat down by the fire and looked out into the glade.\n",
+      "id": 2,
+      "pageType": "body"
+    },
+    { 
+      "MediaImgUris": [
+        "fine_art_blue/rt-warm-fantastic-ocean-sky-blue-green-abstract-afremov-aquamarine-thumbnail.jpg",
+        "fine_arts_warm/115-195-and-Hand-Signed-with-Certificate-of-Authenticity-PristineAuction.com.jpg",
+        "fine_arts_holidays/images33.jpg",
+        "cartoon_animals_sad/images122.jpg"
+      ],
+      "Text": "Night come on, blue and then  red, and the waves never tired of their ceaseless jigging.\nIt was a glorious day for all kinds of little islands\" but not one of them had ever been more beautiful than our own kingdom.\nThe king and queen were sitting in the fire-place at sunset when they heard voices saying: \"We have come to save you!\"\n\"No\"\" answered the princess\" \"I am not afraid of anything; but I think it would be better if we had a palace fire.\"\n",   
+      "id": 3,
+      "pageType": "body"
+    },
+    { 
+      "MediaImgUris": [
+        "fine_arts_courage/courage--matt-konar.jpg"
+      ],
+      "Text": "And some day, when you, too, have grown up and have a wonderful gingerbread and have come into a kingdom of your own, you will live-as they lived-happily ever after.",
+      "id": 4,
+      "pageType": "end"
+    }
+  ],
+  "StoryWritingJobStatus": "a string"
+}

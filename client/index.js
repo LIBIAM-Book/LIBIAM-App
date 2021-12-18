@@ -1,21 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import App from './App';
 
-import App from "./components/App";
-
-import Home from "./components/Home";
-import Form from "./components/Form";
-import PageNotFound from "./components/PageNotFound";
+import { BrowserRouter, Switch } from 'react-router-dom';
+import Layout from './Layout';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/form' component={Form} />
-      <Route component={PageNotFound} />
-    </Switch>
-  </BrowserRouter>,
-  document.getElementById("app")
+  <React.Fragment>
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <App />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
+    ,
+  </React.Fragment>,
+  document.getElementById('app')
 );
