@@ -9,15 +9,11 @@ const AuthLinks = () => {
   return (
     <React.Fragment>
       {auth.isLoggedIn && (
-        <NavLink to='/profile' exact>
+        <NavLink to='/profile'>
           <CgProfile />
         </NavLink>
       )}
-      {!auth.isLoggedIn && (
-        <NavLink to='/auth' exact>
-          LogIn
-        </NavLink>
-      )}
+      {!auth.isLoggedIn && <NavLink to='/auth'>Log In</NavLink>}
     </React.Fragment>
   );
 };

@@ -4,7 +4,7 @@ import { validate } from '../util/validators';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case 'TEXT':
+    case 'CHANGE':
       return {
         ...state,
         value: action.inputValue,
@@ -56,12 +56,12 @@ const Input = (props) => {
   // data push for entire form validity
   const { value, isValid } = inputState;
   useEffect(() => {
-    onInput(inputGroup, value, isValid);
+    onInput(inputGroup, id, value, isValid);
   }, [inputGroup, id, value, isValid, onInput]);
 
   const inputChangeHandler = (event) => {
     dispatch({
-      type: 'TEXT',
+      type: 'CHANGE',
       inputValue: event.target.value,
       validators: validators,
     });
