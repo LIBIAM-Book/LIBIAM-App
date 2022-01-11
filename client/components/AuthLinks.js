@@ -3,6 +3,8 @@ import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
+import './AuthLinks.css';
+
 const AuthLinks = () => {
   const auth = useContext(AuthContext);
 
@@ -13,7 +15,13 @@ const AuthLinks = () => {
           <CgProfile />
         </NavLink>
       )}
-      {!auth.isLoggedIn && <NavLink to='/auth'>Log In</NavLink>}
+      {!auth.isLoggedIn && (
+        <div className='nav__login_container'>
+          <NavLink className='nav__login' to='/auth'>
+            Login
+          </NavLink>
+        </div>
+      )}
     </React.Fragment>
   );
 };

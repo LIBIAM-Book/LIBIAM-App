@@ -12,6 +12,7 @@ import {
   VALIDATOR_REQUIRE,
 } from '../util/validators';
 import Button from '../components/Button';
+import Card from '../components/Card';
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -63,51 +64,53 @@ const Auth = () => {
 
   return (
     <React.Fragment>
-      <div>
-        <h2>Login Required</h2>
-        <hr />
-        <form onSubmit={authSubmitHandler}>
-          {!isLoginMode && (
+      <div className='center-item'>
+        <Card className='auth__form_container'>
+          <h2>Sign in to your Libiam account</h2>
+
+          <form onSubmit={authSubmitHandler}>
+            {!isLoginMode && (
+              <Input
+                element='input'
+                id='name'
+                inputGroup='name'
+                type='text'
+                label='Your Name'
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText='Please enter a name.'
+                onInput={inputHandler}
+              />
+            )}
+
             <Input
               element='input'
-              id='name'
-              inputGroup='name'
-              type='text'
-              label='Your Name'
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText='Please enter a name.'
+              id='email'
+              inputGroup='email'
+              type='email'
+              label='E-Mail'
+              validators={[VALIDATOR_EMAIL()]}
+              errorText='Please enter a valid email address.'
               onInput={inputHandler}
             />
-          )}
+            <Input
+              element='input'
+              id='password'
+              inputGroup='password'
+              type='password'
+              label='Password'
+              validators={[VALIDATOR_MINLENGTH(5)]}
+              errorText='Please enter a valid password, at least 5 characters.'
+              onInput={inputHandler}
+            />
 
-          <Input
-            element='input'
-            id='email'
-            inputGroup='email'
-            type='email'
-            label='E-Mail'
-            validators={[VALIDATOR_EMAIL()]}
-            errorText='Please enter a valid email address.'
-            onInput={inputHandler}
-          />
-          <Input
-            element='input'
-            id='password'
-            inputGroup='password'
-            type='password'
-            label='Password'
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText='Please enter a valid password, at least 5 characters.'
-            onInput={inputHandler}
-          />
-
-          <Button auth type='submit' disabled={!formState.formIsValid}>
-            {isLoginMode ? 'LOGIN' : 'SIGNUP'}
+            <Button auth type='submit' disabled={!formState.formIsValid}>
+              {isLoginMode ? 'LOGIN' : 'SIGNUP'}
+            </Button>
+          </form>
+          <Button auth onClick={switchModeHandler}>
+            Switch to {isLoginMode ? 'SIGNUP' : 'LOGIN'}
           </Button>
-        </form>
-        <Button auth onClick={switchModeHandler}>
-          Switch to {isLoginMode ? 'SIGNUP' : 'LOGIN'}
-        </Button>
+        </Card>
       </div>
     </React.Fragment>
   );

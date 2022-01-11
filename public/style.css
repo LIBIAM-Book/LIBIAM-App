@@ -1013,11 +1013,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
-.text-gray-500 {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1103,6 +1098,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.background {
+  background-color: #f7f8fb;
 }
 
 .hover\:scale-105:hover {
