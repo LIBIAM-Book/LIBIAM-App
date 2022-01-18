@@ -6,6 +6,8 @@ import { useForm } from '../hooks/form-hooks';
 import { VALIDATOR_REQUIRE } from '../util/validators';
 import Button from '../components/Button';
 
+import './FormPage.css';
+
 import demoOlivia from '../mockData/olivia.json';
 import demoJessica from '../mockData/jessica.json';
 
@@ -112,9 +114,9 @@ const FormPage = (props) => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText='Please enter a name!'
             onInput={inputHandler}
-            styles='w-72 mt-8 transition ease-in-out hover:outline-yellow focus:outline-yellow hover:shadow-inner focus:shadow-inner'
+            styles='form_input w-72 transition ease-in-out hover:outline-yellow focus:outline-yellow hover:shadow-inner focus:shadow-inner'
           />
-          <div className='mt-2 w-72 flex justify-between'>
+          <div className='mt-2 w-72 flex justify-between form_radio_wrapper'>
             <div className='w-32'>
               <Input
                 id='boy'
@@ -127,7 +129,6 @@ const FormPage = (props) => {
                 radioBoxStyles='p-5 rounded-full block w-full
               transition ease-in-out 
               outline-0
-              bg-yellow-200
               hover:outline-yellow hover:shadow-inner
               label-checked:bg-yellow-400 label-checked:shadow-inner  
               label-checked:text-white

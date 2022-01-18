@@ -1,4 +1,16 @@
-.nav__login_container:active {
+.nav__links_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+}
+.nav__profile_wrapper {
+  color: #a6a6a6;
+  font-size: 1.7rem;
+}
+
+.nav__login_wrapper:active {
   transition: all 0.15s ease-in-out;
   transform: scale(0.95);
 }

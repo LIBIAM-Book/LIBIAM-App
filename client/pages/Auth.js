@@ -71,11 +71,12 @@ const Auth = () => {
           <form onSubmit={authSubmitHandler}>
             {!isLoginMode && (
               <Input
+                auth
                 element='input'
                 id='name'
                 inputGroup='name'
                 type='text'
-                label='Your Name'
+                placeholder='Your Name'
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='Please enter a name.'
                 onInput={inputHandler}
@@ -83,32 +84,36 @@ const Auth = () => {
             )}
 
             <Input
+              auth
               element='input'
               id='email'
               inputGroup='email'
               type='email'
-              label='E-Mail'
+              placeholder='Email'
               validators={[VALIDATOR_EMAIL()]}
               errorText='Please enter a valid email address.'
               onInput={inputHandler}
             />
             <Input
+              auth
               element='input'
               id='password'
               inputGroup='password'
               type='password'
-              label='Password'
+              placeholder='Password'
               validators={[VALIDATOR_MINLENGTH(5)]}
               errorText='Please enter a valid password, at least 5 characters.'
               onInput={inputHandler}
             />
 
-            <Button auth type='submit' disabled={!formState.formIsValid}>
-              {isLoginMode ? 'LOGIN' : 'SIGNUP'}
-            </Button>
+            <div className='button_container'>
+              <Button auth type='submit' disabled={!formState.formIsValid}>
+                {isLoginMode ? 'Login' : 'Create my account'}
+              </Button>
+            </div>
           </form>
           <Button auth onClick={switchModeHandler}>
-            Switch to {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+            {isLoginMode ? 'Sign Up' : 'Back to login'}
           </Button>
         </Card>
       </div>

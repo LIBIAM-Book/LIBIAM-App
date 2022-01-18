@@ -3,15 +3,19 @@
   max-width: 40rem;
 
   margin: 0 auto;
-  padding: 1rem;
+  padding: 3rem;
 
   text-align: center;
 }
 
 .auth__form_container h2 {
-  margin: 2rem 0;
+  margin-bottom: 3rem;
 
   font-family: 'Barriecito';
   color: #3b82f6;
-  font-size: 1.5rem;
+  font-size: 2rem;
+}
+
+.button_container {
+  margin-top: 2rem;
 }

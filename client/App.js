@@ -58,6 +58,10 @@ const App = () => {
         <Route exact path='/auth'>
           <Auth />
         </Route>
+        {/* dev purpose */}
+        <Route exact path='/profile'>
+          <Profile />
+        </Route>
         <Redirect to='/auth' />
       </Switch>
     );

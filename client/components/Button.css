@@ -1,14 +1,18 @@
 .button_auth {
-  font: inherit;
   padding: 0.5rem 1.5rem;
-  border: 1px solid #7178d6;
-  border-radius: 4px;
-  background: #7178d6;
-  color: white;
-  cursor: pointer;
-  margin-right: 1rem;
+  margin-top: 0.7rem;
+  width: 15rem;
+
+  font-family: 'roboto';
   text-decoration: none;
-  display: inline-block;
+
+  border: 2px solid #316df0;
+  border-radius: 9999px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.26);
+
+  background: white;
+  color: #316df0;
+  cursor: pointer;
 }
 
 .button_auth:focus {
@@ -17,8 +21,9 @@
 
 .button_auth:hover,
 .button_auth:active {
-  background: #676a9e;
-  border-color: #676a9e;
+  background: #316df0;
+  border-color: #316df0;
+  color: white;
 }
 .button_auth:disabled,
 .button_auth:hover:disabled,
