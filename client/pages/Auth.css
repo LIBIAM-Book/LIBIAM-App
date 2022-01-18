@@ -1,22 +1,21 @@
-.auth-form-container {
+.auth__form_container {
   width: 90%;
   max-width: 40rem;
 
   margin: 0 auto;
-  padding: 1rem;
+  padding: 3rem;
 
   text-align: center;
 }
 
-.auth-form-container form {
-  margin-bottom: 1rem;
+.auth__form_container h2 {
+  margin-bottom: 3rem;
+
+  font-family: 'Barriecito';
+  color: #3b82f6;
+  font-size: 2rem;
 }
 
-.auth-btn {
+.button_container {
   margin-top: 2rem;
-}
-
-.profile_preview_size {
-  width: 11rem;
-  height: 11rem;
 }

@@ -2,9 +2,11 @@ import React, { useEffect, useReducer } from 'react';
 
 import { validate } from '../util/validators';
 
+import './Input.css';
+
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case 'TEXT':
+    case 'CHANGE':
       return {
         ...state,
         value: action.inputValue,
@@ -56,12 +58,12 @@ const Input = (props) => {
   // data push for entire form validity
   const { value, isValid } = inputState;
   useEffect(() => {
-    onInput(inputGroup, value, isValid);
+    onInput(inputGroup, id, value, isValid);
   }, [inputGroup, id, value, isValid, onInput]);
 
   const inputChangeHandler = (event) => {
     dispatch({
-      type: 'TEXT',
+      type: 'CHANGE',
       inputValue: event.target.value,
       validators: validators,
     });
@@ -96,8 +98,8 @@ const Input = (props) => {
         onChange={inputChangeHandler}
         onBlur={touchHandler}
         autoComplete='off'
-        className={`${styles} 
-        bg-yellow-200 focus:outline-none rounded-full     
+        className={`input ${styles} ${props.auth && 'input_auth'} 
+        focus:outline-none rounded-full     
         p-5 text-black text-center`}
       />
     ) : props.element === 'radio' ? (
@@ -131,7 +133,7 @@ const Input = (props) => {
       <div className='flex flex-col'>
         <label htmlFor={id}>
           {element}
-          <div className={`${radioBoxStyles}`}>{label}</div>
+          <div className={`radio ${radioBoxStyles}`}>{label}</div>
         </label>
 
         {inputState.isTouched && !inputState.isValid && (

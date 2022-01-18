@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Layout from './Layout/index';
@@ -14,17 +14,14 @@ import Profile from './pages/Profile';
 const App = () => {
   const [childName, setChildName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(false);
 
-  const login = (uid) => {
+  const login = useCallback(() => {
     setIsLoggedIn(true);
-    setUserId(uid);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setIsLoggedIn(false);
-    setUserId(null);
-  };
+  }, []);
 
   let routes;
 
@@ -61,6 +58,10 @@ const App = () => {
         <Route exact path='/auth'>
           <Auth />
         </Route>
+        {/* dev purpose */}
+        <Route exact path='/profile'>
+          <Profile />
+        </Route>
         <Redirect to='/auth' />
       </Switch>
     );
@@ -71,7 +72,6 @@ const App = () => {
       <AuthContext.Provider
         value={{
           isLoggedIn: isLoggedIn,
-          userId: userId,
           login: login,
           logout: logout,
         }}

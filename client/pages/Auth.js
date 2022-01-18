@@ -1,25 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './Auth.css';
 
 import { useForm } from '../hooks/form-hooks';
-import { useHttpClient } from '../hooks/http-hook';
 import { AuthContext } from '../context/AuthContext';
 
 import Input from '../components/Input';
-import Button from '../components/Button';
-import ErrorModal from '../components/ErrorModal';
-import LoadingSpinner from '../components/LoadingSpinner';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from '../util/validators';
+import Button from '../components/Button';
+import Card from '../components/Card';
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { isLoading, error, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -40,7 +37,6 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          // name input does not exist in login mode.
           name: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
@@ -60,105 +56,66 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const authSubmitHandler = async (event) => {
+  const authSubmitHandler = (event) => {
     event.preventDefault();
-    // after login or signup, page redirected to... "root" because
-    // '/auth' doesn't exist in routes in 'App.js' once logged in.
-
-    // IF LOGGING IN -------------
-
-    if (isLoginMode) {
-      try {
-        // Use HttpRequest Hook whenever fetching data from database.
-        const responseData = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL + '/???' ||
-            'http://localhost:5000/api/login',
-          'POST',
-          // Data that we will send to backend.
-          JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            'Content-Type': 'application/json',
-          }
-        );
-        auth.login(responseData.user.id);
-      } catch (err) {}
-    }
-
-    // IF SIGNING UP -------------
-    else {
-      try {
-        const responseData = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL + '/???' ||
-            'http://localhost:5000/api/signup',
-          'POST',
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            'Content-Type': 'application/json',
-          }
-        );
-
-        auth.login(responseData.user.id);
-      } catch (err) {}
-    }
+    console.log(formState.inputs);
+    auth.login();
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
-      <div className='center-item '>
-        <div>
-          {isLoading && <LoadingSpinner asOverlay />}
-          <h2>Login Required</h2>
-          <hr />
+      <div className='center-item'>
+        <Card className='auth__form_container'>
+          <h2>Sign in to your Libiam account</h2>
+
           <form onSubmit={authSubmitHandler}>
             {!isLoginMode && (
               <Input
+                auth
                 element='input'
                 id='name'
                 inputGroup='name'
                 type='text'
-                label='Your Name'
-                placeholder='Write your name here...'
+                placeholder='Your Name'
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='Please enter a name.'
                 onInput={inputHandler}
               />
             )}
+
             <Input
+              auth
               element='input'
               id='email'
               inputGroup='email'
               type='email'
-              label='E-mail'
-              placeholder='Enter your e-mail here...'
+              placeholder='Email'
               validators={[VALIDATOR_EMAIL()]}
-              errorText='Please enter a valid email.'
+              errorText='Please enter a valid email address.'
               onInput={inputHandler}
             />
             <Input
+              auth
               element='input'
               id='password'
               inputGroup='password'
               type='password'
-              label='Password'
-              placeholder='Enter password here...'
-              validators={[VALIDATOR_MINLENGTH(6)]}
+              placeholder='Password'
+              validators={[VALIDATOR_MINLENGTH(5)]}
               errorText='Please enter a valid password, at least 5 characters.'
               onInput={inputHandler}
             />
-            <button type='submit'>{isLoginMode ? 'Login' : 'Sign up'}</button>
+
+            <div className='button_container'>
+              <Button auth type='submit' disabled={!formState.formIsValid}>
+                {isLoginMode ? 'Login' : 'Create my account'}
+              </Button>
+            </div>
           </form>
-          <Button onClick={switchModeHandler}>
-            Switch to {isLoginMode ? 'Sign up' : 'Login'}
+          <Button auth onClick={switchModeHandler}>
+            {isLoginMode ? 'Sign Up' : 'Back to login'}
           </Button>
-        </div>
+        </Card>
       </div>
     </React.Fragment>
   );

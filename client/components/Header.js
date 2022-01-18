@@ -13,7 +13,7 @@ const Header = (props) => {
       <h1 className='col-start-2 text-2xl tracking-wide font-bold text-blue-600'>
         <Link to='/'>Libiam</Link>
       </h1>
-      <div className='ml-auto mr-3 text-2xl text-gray-500'>
+      <div className='ml-auto mr-3'>
         <AuthLinks />
       </div>
     </header>

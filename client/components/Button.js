@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './Button.css';
+
 const Button = (props) => {
   let { href, styles, children, to, exact, type, onClick, disabled } = props;
 
@@ -30,7 +32,9 @@ const Button = (props) => {
   return (
     // regular button
     <button
-      className={`${styles} inline-block rounded-full`}
+      className={`${styles} ${
+        props.auth && 'button_auth'
+      } inline-block rounded-full`}
       type={type}
       onClick={onClick}
       disabled={disabled}
