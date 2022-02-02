@@ -5,8 +5,12 @@ const morgan = require('morgan');
 const path = require('path');
 require('dotenv').config();
 
+const routers = require('./routers');
+
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+const dbHelper = require('./dbHelper.js');
 
 const initializeExpress = () => {
   const app = express();
@@ -20,6 +24,8 @@ const initializeExpress = () => {
 
   app.use('/', express.static(path.resolve(__dirname, '../public')));
 
+  app.use('/api', routers)
+
   app.get('*', (req, res) =>
     res.sendFile('index.html', { root: path.join('__dirname', '../public') })
   );
@@ -31,6 +37,7 @@ const initializeExpress = () => {
 
 const initializeApp = () => {
   initializeExpress();
+  dbHelper.testConnection()
 };
 
 initializeApp();
