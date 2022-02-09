@@ -25,7 +25,7 @@ module.exports = {
     res.send(req.query);
   },
   authenticateUser: async (req, res) => {
-    res.send(req.query);
+    res.send('Successfully reached POST Auth endpoint');
   },
   getBooks: async (req, res) => {
     res.send('Successfully reached GET Books endpoint');

@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 //prevent 'regeneratorRuntime is not defined' error (occurs when using async with webpack)
 import 'regenerator-runtime/runtime';
 
@@ -18,12 +17,12 @@ import {
 import Button from '../components/Button';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorModal from '../components/ErrorModal';
+import ErrorMessage from '../components/ErrorMessage';
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -44,7 +43,8 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          name: undefined,
+          firstName: undefined,
+          lastName: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -52,7 +52,11 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          name: {
+          firstName: {
+            value: '',
+            isValid: false,
+          },
+          lastName: {
             value: '',
             isValid: false,
           },
@@ -65,47 +69,86 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    // console.log(formState.inputs);
+    console.log(formState.inputs);
 
     // for logging in -----------
-    // try {
-    //   // created HttpRequest Hook to be used whenever fetching data from database.
-    //   const responseData = await sendRequest('/api/users');
-    //   console.log(responseData);
-    // } catch (err) {}
-
-    try {
-      const { data } = await axios.get('/api/users');
-      console.log(data);
-    } catch (err) {}
+    if (isLoginMode) {
+      try {
+        // created HttpRequest Hook to be used whenever fetching data from database.
+        const responseData = await sendRequest(
+          '/api/users/auth',
+          'POST',
+          {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          },
+          {
+            'Content-Type': 'application/json',
+          }
+        );
+        console.log(responseData);
+      } catch (err) {}
+    }
+    // for signing up -----------
+    else {
+      try {
+        const responseData = await sendRequest(
+          '/api/users',
+          'POST',
+          {
+            firstName: formState.inputs.firstName.value,
+            lastName: formState.inputs.lastName.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          },
+          {
+            'Content-Type': 'application/json',
+          }
+        );
+        console.log(responseData);
+      } catch (err) {}
+    }
   };
 
   return (
     <React.Fragment>
-      {/* <ErrorModal error={error} onClear={clearError} variant='danger' /> */}
       <div className='center-item'>
         <Card className='auth__form_container'>
-          {/* {isLoading && <LoadingSpinner asOverlay />} */}
+          {isLoading && <LoadingSpinner asOverlay />}
 
           <h2>Sign in to your Libiam account</h2>
+          {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
 
           <form onSubmit={authSubmitHandler}>
             {!isLoginMode && (
-              <Input
-                auth
-                element='input'
-                id='name'
-                inputGroup='name'
-                type='text'
-                placeholder='Your Name'
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a name.'
-                onInput={inputHandler}
-              />
+              <div className='auth__form_short_input_wrapper'>
+                <Input
+                  styles='auth__form_short_input'
+                  element='input'
+                  id='firstName'
+                  inputGroup='firstName'
+                  type='text'
+                  placeholder='First Name'
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText='Please enter your first name.'
+                  onInput={inputHandler}
+                />
+                {/* {!isLoginMode && ( */}
+                <Input
+                  styles='auth__form_short_input'
+                  element='input'
+                  id='lastName'
+                  inputGroup='lastName'
+                  type='text'
+                  placeholder='Last Name'
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText='Please enter your last name.'
+                  onInput={inputHandler}
+                />
+              </div>
             )}
-
             <Input
-              auth
+              styles='auth__form_long_input'
               element='input'
               id='email'
               inputGroup='email'
@@ -116,7 +159,7 @@ const Auth = () => {
               onInput={inputHandler}
             />
             <Input
-              auth
+              styles='auth__form_long_input'
               element='input'
               id='password'
               inputGroup='password'

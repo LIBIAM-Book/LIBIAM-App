@@ -9,11 +9,32 @@
 }
 
 .auth__form_container h2 {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 
   font-family: 'Barriecito';
   color: #3b82f6;
   font-size: 2rem;
+}
+
+.auth__form_container form {
+  margin-top: 3rem;
+}
+
+.auth__form_short_input_wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 1rem 0;
+}
+
+.auth__form_short_input {
+  width: 14rem;
+  padding: 1rem;
+}
+
+.auth__form_long_input {
+  width: 30rem;
+  padding: 1rem;
 }
 
 .button_container {

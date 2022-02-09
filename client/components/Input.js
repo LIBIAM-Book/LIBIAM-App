@@ -98,7 +98,7 @@ const Input = (props) => {
         onChange={inputChangeHandler}
         onBlur={touchHandler}
         autoComplete='off'
-        className={`input ${styles} ${props.auth && 'input_auth'} 
+        className={`input ${styles}
         focus:outline-none rounded-full     
         p-5 text-black text-center`}
       />
@@ -130,7 +130,7 @@ const Input = (props) => {
 
   return (
     <>
-      <div className='flex flex-col'>
+      <div>
         <label htmlFor={id}>
           {element}
           <div className={`radio ${radioBoxStyles}`}>{label}</div>

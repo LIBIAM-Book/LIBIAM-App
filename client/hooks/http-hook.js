@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,19 +10,24 @@ export const useHttpClient = () => {
       // while "isLoading" is true, "LoadingSpinner.js" will run.
       setIsLoading(true);
 
-      try {
-        // sidenote:: fetch in default process a GET request, so no need to declare method if only used for get method.
-        const response = await fetch(url, {
-          method: method,
-          body: body,
-          headers: headers,
-        });
+      let options = {
+        url: url,
+        method: method,
+        body: body,
+        headers: headers,
+      };
 
-        const responseData = await response.json();
+      try {
+        const response = await axios(options);
+
+        const responseData = await response.data;
 
         // show error if response code is not 200s. (400, 500) because they are not error codes by default.
-        if (!response.ok) {
-          throw new Error(responseData.message);
+        let responseOk =
+          response && response.status === 200 && response.statusText === 'OK';
+
+        if (!responseOk) {
+          throw new Error(response.message);
         }
 
         setIsLoading(false);
