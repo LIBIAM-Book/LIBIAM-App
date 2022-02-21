@@ -1,23 +1,58 @@
-const dbHelper = require('./dbHelper.js');
+const { pool } = require('./dbHelper.js');
 
-const registrationQ = `INSERT INTO test (name, username, email, password) VALUES (?,?,?,?)`;
+/*** MySQL query for setting isolation level to READ COMMITED for avoiding potential data race ***/
+
+// await connection.execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+// console.log('Finished setting the isolation level to read committed');
 
 module.exports = {
   getUser: async (req, res) => {
     res.send('Successfully reached GET User endpoint');
   },
   registerUser: async (req, res) => {
-    console.log(req.query);
+    if (req.body) {
+      const { first_name, last_name, email, password } = req.body;
+      const userTableData = [email, password, email, email];
+      const userProfileData = [last_name, first_name, email, email, email];
+      
+      await pool.getConnection(async (err, connection) => {
+        console.log('Pool connection acquired')
 
-    if (req.query) {
-      const { name, username, email, password } = req.query;
-      const userData = [name, username, email, password];
+        if (err) {
+          console.log(err);
+          pool.releaseConnection(conn);
+          res.status(400).send(err)
+          
+        } else {
+          let userIdQuery;
+          const conn = connection.promise();
+          console.log('Connection promisified')
 
-      await dbHelper.queryDB(registrationQ, 'users', userData);
+          await conn.beginTransaction();
+          console.log('Begin transaction')
 
-      res.send('REGISTERED');
+          await conn.execute('INSERT INTO user_t (user_name, password, created_by, updated_by) VALUES(?,?,?,?)', userTableData);
+          console.log('First query executed')
+
+          userIdQuery = await conn.execute(`SELECT LAST_INSERT_ID()`);
+          const userId = userIdQuery[0][0]['LAST_INSERT_ID()'];
+          console.log('Retrieved user id:', userId)
+
+          await conn.execute('INSERT INTO user_profile_t (user_id, last_name, first_name, email, created_by, updated_by) VALUES (?,?,?,?,?,?)', [userId, ...userProfileData]);
+          console.log('Second query executed')
+
+          await conn.commit();
+          console.log('Transaction commited')
+
+          const [rows,] = await conn.execute(`SELECT * FROM user_t WHERE id='${userId}'`);
+          console.log('Displaying recently added data:', rows[0])
+
+          pool.releaseConnection(conn);
+          res.send(rows[0])
+        }
+      })
     } else {
-      res.send('QUERY PARAMETER IS MISSING');
+      res.status(400).send('QUERY PARAMETER IS MISSING');
     }
   },
   updateUser: async (req, res) => {
