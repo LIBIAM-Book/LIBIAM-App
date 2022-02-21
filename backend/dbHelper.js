@@ -1,22 +1,19 @@
-const mysql      = require('mysql2/promise');
+const mysql = require('mysql2/promise');
 
-const userPool = mysql.createPool({
+const pool = mysql.createPool({
   host     : process.env.MYSQL_HOST,
   user     : process.env.MYSQL_USER,
   password : process.env.MYSQL_PASSWORD,
-  database : 'users'
-});
-
-const bookPool = mysql.createPool({
-  host     : process.env.MYSQL_HOST,
-  user     : process.env.MYSQL_USER,
-  password : process.env.MYSQL_PASSWORD,
-  database : 'books'
+  database : 'books',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 module.exports = {
+  pool: pool.pool,
   testConnection: async () => {
-    await userPool.getConnection(async (err, connection) => {
+    await pool.getConnection(async (err, connection) => {
       if (err) throw err;
     
       connection.release();
@@ -24,16 +21,6 @@ module.exports = {
     })
   },
   queryDB: async (q, db, params, callback) => {
-    let pool;
-
-    if (db === 'users') {
-      pool = userPool;
-    } else if (db === 'books') {
-      pool = bookPool;
-    } else {
-      return 'INVALID DATABASE SELECTED';
-    }
-
     pool.getConnection(async (err, connection) => {
       if (err) throw err;
 

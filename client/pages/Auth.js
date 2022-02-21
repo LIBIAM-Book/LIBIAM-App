@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 //prevent 'regeneratorRuntime is not defined' error (occurs when using async with webpack)
 import 'regenerator-runtime/runtime';
+import axios from 'axios';
 
 import './Auth.css';
 
@@ -92,21 +93,21 @@ const Auth = () => {
     // for signing up -----------
     else {
       try {
-        const responseData = await sendRequest(
-          '/api/users',
-          'POST',
-          {
-            firstName: formState.inputs.firstName.value,
-            lastName: formState.inputs.lastName.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          },
-          {
-            'Content-Type': 'application/json',
-          }
-        );
-        console.log(responseData);
-      } catch (err) {}
+        // TODO: the input form value contains label name, not the value. Please refactor 
+        axios
+          .post('/api/users', {
+            first_name: formState.inputs.firstName.isValid,
+            last_name: formState.inputs.lastName.isValid,
+            email: formState.inputs.email.isValid,
+            password: formState.inputs.password.isValid,
+          })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } catch (err) { console.log(err) }
     }
   };
 

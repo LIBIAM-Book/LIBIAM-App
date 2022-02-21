@@ -1,5 +1,5 @@
 const express = require('express');
-
+const bodyParser = require('body-parser')
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
@@ -14,6 +14,12 @@ const dbHelper = require('./dbHelper.js');
 
 const initializeExpress = () => {
   const app = express();
+
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }))
+
+  // parse application/json
+  app.use(bodyParser.json())
 
   if (NODE_ENV === 'production') {
     app.use(cors);
