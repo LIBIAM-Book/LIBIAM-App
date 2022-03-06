@@ -39,6 +39,9 @@ const Auth = () => {
     false
   );
 
+  //⬇⬇⬇ FOR DEV CHECK PURPOSE.
+  // console.log(formState);
+
   const switchModeHandler = () => {
     if (!isLoginMode) {
       setFormData(
@@ -93,21 +96,22 @@ const Auth = () => {
     // for signing up -----------
     else {
       try {
-        // TODO: the input form value contains label name, not the value. Please refactor 
         axios
           .post('/api/users', {
-            first_name: formState.inputs.firstName.isValid,
-            last_name: formState.inputs.lastName.isValid,
-            email: formState.inputs.email.isValid,
-            password: formState.inputs.password.isValid,
+            first_name: formState.inputs.firstName.value,
+            last_name: formState.inputs.lastName.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
           })
-          .then(res => {
-            console.log(res)
+          .then((res) => {
+            console.log(res);
           })
-          .catch(err => {
-            console.log(err)
-          })
-      } catch (err) { console.log(err) }
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

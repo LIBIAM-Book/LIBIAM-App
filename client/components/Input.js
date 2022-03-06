@@ -58,7 +58,9 @@ const Input = (props) => {
   // data push for entire form validity
   const { value, isValid } = inputState;
   useEffect(() => {
-    onInput(inputGroup, id, value, isValid);
+    // ⬇⬇⬇ FOR DEV CHECK PURPOSE.
+    // console.log(inputState);
+    onInput(value, isValid, inputGroup);
   }, [inputGroup, id, value, isValid, onInput]);
 
   const inputChangeHandler = (event) => {
@@ -67,8 +69,8 @@ const Input = (props) => {
       inputValue: event.target.value,
       validators: validators,
     });
-    // ⬇⬇⬇ FOR DEV CHECK PURPOSE. Feel free to delete
-    // console.log(event.target.id, isValid);
+    // ⬇⬇⬇ FOR DEV CHECK PURPOSE.
+    // console.log(event.target.id, event.target.value, isValid);
   };
 
   const radioChangeHandler = (event) => {
@@ -97,7 +99,7 @@ const Input = (props) => {
         value={inputState.value}
         onChange={inputChangeHandler}
         onBlur={touchHandler}
-        autoComplete='off'
+        // autoComplete='off'
         className={`input ${styles}
         focus:outline-none rounded-full     
         p-5 text-black text-center`}
