@@ -21,6 +21,9 @@ const PersonalizedBook = (props) => {
     heading = 'How do you want to change your story?';
   }
 
+  isLogin = false;
+  
+
   return (
     <div className='flex flex-col justify-center items-center w-full h-full mt-20'>
       <h1 className='font-roboto mb-12 text-lg font-medium'>{heading}</h1>
