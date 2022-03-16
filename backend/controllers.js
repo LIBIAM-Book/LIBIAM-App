@@ -102,12 +102,13 @@ module.exports = {
             if (rows[0].password == hashedPw){
               // logged in successfully
               console.log('logged in successfully! ');
+              
               return res.status(200).send('logged in successfully');
   
             } else {
               // password not matched
               console.log('password not matched!');
-              return res.status(200).send('password not matched');
+              return res.status(401).send('password not matched');
               // return "your input does not match";
             }
             
