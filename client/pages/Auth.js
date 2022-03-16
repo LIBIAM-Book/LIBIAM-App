@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 //prevent 'regeneratorRuntime is not defined' error (occurs when using async with webpack)
 import 'regenerator-runtime/runtime';
 import axios from 'axios';
@@ -21,8 +21,26 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 
 const Auth = () => {
+  const signUpSuccessMsg = (
+    <>
+      <p className="text-green">Sign up successful!</p>
+      <p>Please log in with the registered credentials.</p>
+    </>
+  );
+  const signUpFailedMsg = (
+    <>
+      <p className="text-red">Sign up Failed &#58;&#40;</p>
+      <p>Please try again!</p>
+    </>
+  );
+  const signUpMsgWrapperStyle = 'w-full h-full l-0 t-0 mt-4 text-md';
+  
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [showSignUpMsg, setShowSignUpMsg] = useState(false);
+  const [signUpMsg, setSignUpMsg] = useState(signUpSuccessMsg);
+  const [disableSubmission, setDisableSubmission] = useState(false);
+  const [signUpMsgWrapperCSS, setSignUpMsgWrapperCSS] = useState('hidden');
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -40,7 +58,7 @@ const Auth = () => {
   );
 
   //⬇⬇⬇ FOR DEV CHECK PURPOSE.
-  // console.log(formState);
+  // console.log(formState.formIsValid);
 
   const switchModeHandler = () => {
     if (!isLoginMode) {
@@ -52,6 +70,9 @@ const Auth = () => {
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
+      setShowSignUpMsg(false);
+      setSignUpMsg(''); // DO I NEED THIS?
+      setDisableSubmission(false);
     } else {
       setFormData(
         {
@@ -106,15 +127,28 @@ const Auth = () => {
           })
           .then((res) => {
             console.log(res);
+            setShowSignUpMsg(true);
+            setSignUpMsg(signUpSuccessMsg);
+            setDisableSubmission(true)
           })
           .catch((err) => {
             console.log(err);
+            setShowSignUpMsg(true);
+            setSignUpMsg(signUpFailedMsg);
           });
       } catch (err) {
         console.log(err);
       }
     }
   };
+
+  useEffect(() => {
+    if (showSignUpMsg) {
+      setSignUpMsgWrapperCSS(signUpMsgWrapperStyle);
+    } else {
+      setSignUpMsgWrapperCSS('hidden');
+    }
+  }, [showSignUpMsg])
 
   return (
     <React.Fragment>
@@ -125,7 +159,7 @@ const Auth = () => {
           <h2>Sign in to your Libiam account</h2>
           {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
 
-          <form onSubmit={authSubmitHandler}>
+          <form onSubmit={authSubmitHandler} className="relative">
             {!isLoginMode && (
               <div className='auth__form_short_input_wrapper'>
                 <Input
@@ -175,9 +209,11 @@ const Auth = () => {
               errorText='Please enter a valid password, at least 5 characters.'
               onInput={inputHandler}
             />
-
+            <div className={signUpMsgWrapperCSS}>
+              {signUpMsg}
+            </div>
             <div className='button_container'>
-              <Button auth type='submit' disabled={!formState.formIsValid}>
+              <Button auth type='submit' disabled={!formState.formIsValid || disableSubmission}>
                 {isLoginMode ? 'Login' : 'Create my account'}
               </Button>
             </div>
