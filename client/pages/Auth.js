@@ -115,18 +115,19 @@ const Auth = () => {
     if (isLoginMode) {
       try {
         // created HttpRequest Hook to be used whenever fetching data from database.
-        const responseData = await sendRequest(
-          '/api/users/auth',
-          'POST',
-          {
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          },
-          {
-            'Content-Type': 'application/json',
-          }
-        );
         console.log(responseData);
+        axios
+        .post('/api/users/auth', {
+          
+          email: formState.inputs.email.isValid,
+          password: formState.inputs.password.isValid,
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       } catch (err) {}
     }
     // for signing up -----------
