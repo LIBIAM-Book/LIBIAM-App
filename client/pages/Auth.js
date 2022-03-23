@@ -21,18 +21,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 
 const Auth = () => {
-  const signUpSuccessMsg = (
-    <>
-      <p className="text-green">Sign up successful!</p>
-      <p>Please log in with the registered credentials.</p>
-    </>
-  );
-  const signUpFailedMsg = (
-    <>
-      <p className="text-red">Sign up Failed &#58;&#40;</p>
-      <p>Please try again!</p>
-    </>
-  );
   const signUpMsgWrapperStyle = 'w-full h-full l-0 t-0 mt-4 text-md';
   
   const auth = useContext(AuthContext);
@@ -42,6 +30,33 @@ const Auth = () => {
   const [disableSubmission, setDisableSubmission] = useState(false);
   const [signUpMsgWrapperCSS, setSignUpMsgWrapperCSS] = useState('hidden');
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const signUpSuccessMsg = (
+    <>
+      <p className="text-green">
+        Sign up
+        <strong style={{ color: 'green' }}> Successful!</strong>
+      </p>
+      <p>Please log in with the registered credentials.</p>
+    </>
+  );
+  const signUpFailedMsg = (msg) => (
+    <>
+      <p className="text-red">
+        Sign up
+        <strong style={{ color: 'red' }}>
+          {' '}Failed{' '}
+        </strong>
+      </p>
+      <p>
+        Due to:
+        {' '}
+        {msg} &#58;&#40;
+      </p>
+      <br />
+      <p>Please try again!</p>
+    </>
+  );
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -131,9 +146,16 @@ const Auth = () => {
             setDisableSubmission(true)
           })
           .catch((err) => {
-            console.log(err);
+            console.log('error message', err.response);
+            console.log('error status', err.status)
             setShowSignUpMsg(true);
-            setSignUpMsg(signUpFailedMsg);
+            let errMsg = '';
+            if (err.response.status === 409) {
+              errMsg = "User already exists.";
+            } else {
+              errMsg = "Unknown error occured.";
+            }
+            setSignUpMsg(signUpFailedMsg(errMsg));
           });
       } catch (err) {
         console.log(err);
