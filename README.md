@@ -46,3 +46,9 @@ npx tailwindcss -i ./client/components/styles/style.css -o ./public/style.css --
 This will run tailwindcss cli which will compile and output the final css to the public folder. You may not attach the `--watch` flag if you just need to compile it once.
 
 Happy hacking! 💃
+
+
+### Todo
+- [ ] Add error message when login failed
+- [ ] Style registration confirm message
+- [ ] Refactor with proper semantics and clean code
