@@ -50,5 +50,6 @@ Happy hacking! 💃
 
 ### Todo
 - [ ] Add error message when login failed
+- [ ] Fetch user data on Profile page
 - [ ] Style registration confirm message
 - [ ] Refactor with proper semantics and clean code
