@@ -28,32 +28,49 @@ module.exports = {
         } else {
           let userIdQuery;
           const conn = connection.promise();
-          console.log('Connection promisified')
+          console.log('Connection promisified');
 
           await conn.beginTransaction();
-          console.log('Begin transaction')
-
+          console.log('Begin transaction');
+          
           const sha256 = require('sha256');
           const hashedPw = sha256(email + password + salt);
 
-          await conn.execute('INSERT INTO user_t (user_name, password, created_by, updated_by) VALUES(?,?,?,?)', [email, hashedPw, email, email]);
-          console.log('First query executed')
+          await conn
+            .execute('INSERT INTO user_t (user_name, password, created_by, updated_by) VALUES(?,?,?,?)', userTableData)
+            .then(async (data) => {
+              console.log('First query executed')
+              
+              userIdQuery = await conn.execute(`SELECT LAST_INSERT_ID()`);
+              const userId = userIdQuery[0][0]['LAST_INSERT_ID()'];
+              console.log('Retrieved user id:', userId)
+    
+              await conn.execute('INSERT INTO user_profile_t (user_id, last_name, first_name, email, created_by, updated_by) VALUES (?,?,?,?,?,?)', [userId, ...userProfileData]);
+              console.log('Second query executed')
+    
+              await conn.commit();
+              console.log('Transaction commited')
+    
+              const [rows,] = await conn.execute(`SELECT * FROM user_t WHERE id='${userId}'`);
+              console.log('Displaying recently added data:', rows[0])
+    
+              pool.releaseConnection(conn);
+              return res.status(202).send(rows[0])
+            })
+            .catch(err => {
+              conn.rollback(() => {
+                throw err;
+              })
+              console.log('ROLLBACK transaction')
+              console.log(err.message)
+              pool.releaseConnection(conn);
 
-          userIdQuery = await conn.execute(`SELECT LAST_INSERT_ID()`);
-          const userId = userIdQuery[0][0]['LAST_INSERT_ID()'];
-          console.log('Retrieved user id:', userId)
-
-          await conn.execute('INSERT INTO user_profile_t (user_id, last_name, first_name, email, created_by, updated_by) VALUES (?,?,?,?,?,?)', [userId, ...userProfileData]);
-          console.log('Second query executed')
-
-          await conn.commit();
-          console.log('Transaction commited')
-
-          const [rows,] = await conn.execute(`SELECT * FROM user_t WHERE id='${userId}'`);
-          console.log('Displaying recently added data:', rows[0])
-
-          pool.releaseConnection(conn);
-          res.send(rows[0])
+              if (err.message.includes('Duplicate')) {
+                return res.status(409).send(err.message)
+              } else {
+                return res.status(500).send('unknown error occured')
+              }
+            });
         }
       })
     } else {
