@@ -42,7 +42,7 @@ const Home = () => (
         </div>
 
         <Button
-          to='/form'
+          to='/auth'
           styles='mt-6 p-3 w-48 shadow-lg
           transition ease-in-out 
           bg-white text-blue-500 
@@ -50,7 +50,7 @@ const Home = () => (
           active:bg-blue-600
           transform active:scale-95'
         >
-          Create a Book!
+          Start Your Book!
         </Button>
       </div>
     </div>

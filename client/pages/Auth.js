@@ -22,7 +22,7 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const Auth = () => {
   const signUpMsgWrapperStyle = 'w-full h-full l-0 t-0 mt-4 text-md';
-  
+
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [showSignUpMsg, setShowSignUpMsg] = useState(false);
@@ -72,9 +72,6 @@ const Auth = () => {
     false
   );
 
-  //⬇⬇⬇ FOR DEV CHECK PURPOSE.
-  // console.log(formState.formIsValid);
-
   const switchModeHandler = () => {
     if (!isLoginMode) {
       setFormData(
@@ -109,25 +106,23 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+    // console.log(formState.inputs.email.value);
 
     // for logging in -----------
     if (isLoginMode) {
       try {
-        // created HttpRequest Hook to be used whenever fetching data from database.
-        console.log(responseData);
         axios
-        .post('/api/users/auth', {
-          
-          email: formState.inputs.email.isValid,
-          password: formState.inputs.password.isValid,
-        })
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          .post('/api/users/auth', {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          })
+          .then((res) => {
+            console.log(res);
+            auth.login(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } catch (err) {}
     }
     // for signing up -----------
@@ -170,7 +165,7 @@ const Auth = () => {
     } else {
       setSignUpMsgWrapperCSS('hidden');
     }
-  }, [showSignUpMsg])
+  }, [showSignUpMsg]);
 
   return (
     <React.Fragment>
@@ -181,7 +176,7 @@ const Auth = () => {
           <h2>Sign in to your Libiam account</h2>
           {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
 
-          <form onSubmit={authSubmitHandler} className="relative">
+          <form onSubmit={authSubmitHandler} className='relative'>
             {!isLoginMode && (
               <div className='auth__form_short_input_wrapper'>
                 <Input
@@ -231,11 +226,13 @@ const Auth = () => {
               errorText='Please enter a valid password, at least 5 characters.'
               onInput={inputHandler}
             />
-            <div className={signUpMsgWrapperCSS}>
-              {signUpMsg}
-            </div>
+            <div className={signUpMsgWrapperCSS}>{signUpMsg}</div>
             <div className='button_container'>
-              <Button auth type='submit' disabled={!formState.formIsValid || disableSubmission}>
+              <Button
+                auth
+                type='submit'
+                disabled={!formState.formIsValid || disableSubmission}
+              >
                 {isLoginMode ? 'Login' : 'Create my account'}
               </Button>
             </div>

@@ -11,13 +11,13 @@ const AuthLinks = () => {
   return (
     <React.Fragment>
       <ul className='nav__links_container'>
-        {/* {auth.isLoggedIn && ( */}
-        <li className='nav__profile_wrapper'>
-          <NavLink to='/profile'>
-            <CgProfile />
-          </NavLink>
-        </li>
-        {/* )} */}
+        {auth.isLoggedIn && (
+          <li className='nav__profile_wrapper'>
+            <NavLink to='/profile'>
+              <CgProfile />
+            </NavLink>
+          </li>
+        )}
         {!auth.isLoggedIn && (
           <li className='nav__login_wrapper'>
             <NavLink className='nav__login' to='/auth'>

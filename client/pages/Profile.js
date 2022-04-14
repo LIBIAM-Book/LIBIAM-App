@@ -22,6 +22,17 @@ const Profile = () => {
         </div>
 
         <div className='profile_right'>
+          <Button
+            to='/form'
+            styles='mt-6 p-3 w-48 shadow-lg
+          transition ease-in-out 
+          bg-white text-blue-500 
+          hover:bg-blue-500 hover:text-white
+          active:bg-blue-600
+          transform active:scale-95'
+          >
+            Create a New Book!
+          </Button>
           <Card className='profile_card'>
             <div className='profile_list_title'>Your Order</div>
             <ul className='profile_list_wrapper'>

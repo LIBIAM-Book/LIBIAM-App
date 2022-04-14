@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Layout from './Layout/index';
@@ -14,19 +14,19 @@ import Profile from './pages/Profile';
 const App = () => {
   const [childName, setChildName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
+  const loginHandler = (data) => {
+    setIsLoggedIn(data);
+  };
+  const logoutHandler = () => {
     setIsLoggedIn(false);
-  }, []);
+  };
 
   let routes;
 
   if (isLoggedIn) {
     routes = (
+      // If I signup/login, then, "/auth" route does not exist in this group of routes,
+      // then I will be redirected to "/" route.
       <Switch>
         <Route exact path='/'>
           <Home />
@@ -40,7 +40,7 @@ const App = () => {
         <Route exact path='/profile'>
           <Profile />
         </Route>
-        <Redirect to='/' />
+        <Redirect to='/profile' />
       </Switch>
     );
   } else {
@@ -49,18 +49,14 @@ const App = () => {
         <Route exact path='/'>
           <Home />
         </Route>
-        <Route exact path='/form'>
+        {/* <Route exact path='/form'>
           <FormPage setChildName={setChildName} />
         </Route>
         <Route exact path='/personalized-book'>
           <PersonalizedBook childName={childName} />
-        </Route>
+        </Route> */}
         <Route exact path='/auth'>
           <Auth />
-        </Route>
-        {/* dev purpose */}
-        <Route exact path='/profile'>
-          <Profile />
         </Route>
         <Redirect to='/auth' />
       </Switch>
@@ -72,8 +68,8 @@ const App = () => {
       <AuthContext.Provider
         value={{
           isLoggedIn: isLoggedIn,
-          login: login,
-          logout: logout,
+          login: loginHandler,
+          logout: logoutHandler,
         }}
       >
         <BookProvider>
