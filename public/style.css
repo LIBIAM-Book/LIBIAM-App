@@ -671,6 +671,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
 .h-tall {
   height: 32rem;
 }
@@ -687,14 +695,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 50px;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
-.h-16 {
-  height: 4rem;
-}
-
 .h-auto {
   height: auto;
 }
@@ -705,6 +705,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .min-h-96 {
   min-height: 24rem;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .w-96 {
@@ -729,10 +733,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-50px {
   width: 50px;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .w-32 {
@@ -841,6 +841,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-width: 2px;
 }
 
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
 .bg-libiamYellow-light {
   --tw-bg-opacity: 1;
   background-color: rgb(250 229 161 / var(--tw-bg-opacity));
@@ -853,11 +858,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-gray-200 {
@@ -894,12 +894,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 0.5;
 }
 
-.p-2 {
-  padding: 0.5rem;
-}
-
 .p-4 {
   padding: 1rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-5 {
@@ -932,12 +932,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: center;
 }
 
-.font-barriecito {
-  font-family: Barriecito, sans-serif;
-}
-
 .font-roboto {
   font-family: Roboto, sans-serif;
+}
+
+.font-barriecito {
+  font-family: Barriecito, sans-serif;
 }
 
 .text-4xl {

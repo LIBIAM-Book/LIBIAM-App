@@ -1,19 +1,39 @@
-import React, { useContext } from 'react';
+import axios from 'axios';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from '../components/Button';
 import Card from '../components/Card';
+import UserBookList from '../components/UserBookList';
 import { AuthContext } from '../context/AuthContext';
 
 import './Profile.css';
 
 const Profile = () => {
   const auth = useContext(AuthContext);
+  const [userBooks, setUserBooks] = useState();
+
+  useEffect(() => {
+    const fetchUserBooks = () => {
+      try {
+        axios
+          .get('/api/books')
+          .then((res) => {
+            console.log(res);
+            setUserBooks(res.data);
+          })
+          .catch((err) => console.log(err));
+      } catch (err) {}
+    };
+
+    fetchUserBooks();
+    // Add dependency as user id when user db is complete
+  }, []);
 
   return (
     <React.Fragment>
       <div className='profile_container'>
         <div className='profile_left'>
           <h2>My Account</h2>
-          <h3>Julia Kang</h3>
+          <h3>USER NAME</h3>
           {/* {auth.isLoggedIn && ( */}
           <Button auth onClick={auth.logout}>
             Logout
@@ -34,12 +54,8 @@ const Profile = () => {
             Create a New Book!
           </Button>
           <Card className='profile_card'>
-            <div className='profile_list_title'>Your Order</div>
-            <ul className='profile_list_wrapper'>
-              <li className='profile_list_item'>The Adventures of Olivia</li>
-              <li className='profile_list_item'>The Adventures of Olivia</li>
-              <li className='profile_list_item'>The Adventures of Olivia</li>
-            </ul>
+            <div className='profile_list_title'>Your Books</div>
+            <UserBookList listItems={userBooks} />
           </Card>
         </div>
       </div>

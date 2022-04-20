@@ -33,7 +33,7 @@ const Auth = () => {
 
   const signUpSuccessMsg = (
     <>
-      <p className="text-green">
+      <p className='text-green'>
         Sign up
         <strong style={{ color: 'green' }}> Successful!</strong>
       </p>
@@ -42,17 +42,11 @@ const Auth = () => {
   );
   const signUpFailedMsg = (msg) => (
     <>
-      <p className="text-red">
+      <p className='text-red'>
         Sign up
-        <strong style={{ color: 'red' }}>
-          {' '}Failed{' '}
-        </strong>
+        <strong style={{ color: 'red' }}> Failed </strong>
       </p>
-      <p>
-        Due to:
-        {' '}
-        {msg} &#58;&#40;
-      </p>
+      <p>Due to: {msg} &#58;&#40;</p>
       <br />
       <p>Please try again!</p>
     </>
@@ -139,17 +133,17 @@ const Auth = () => {
             console.log(res);
             setShowSignUpMsg(true);
             setSignUpMsg(signUpSuccessMsg);
-            setDisableSubmission(true)
+            setDisableSubmission(true);
           })
           .catch((err) => {
             console.log('error message', err.response);
-            console.log('error status', err.status)
+            console.log('error status', err.status);
             setShowSignUpMsg(true);
             let errMsg = '';
             if (err.response.status === 409) {
-              errMsg = "User already exists.";
+              errMsg = 'User already exists.';
             } else {
-              errMsg = "Unknown error occured.";
+              errMsg = 'Unknown error occured.';
             }
             setSignUpMsg(signUpFailedMsg(errMsg));
           });
