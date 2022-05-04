@@ -14,6 +14,8 @@ import Profile from './pages/Profile';
 const App = () => {
   const [childName, setChildName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // NEED UPDATE:: data is placeholder for now. Use actual token or user id data once user db is complete.
   const loginHandler = (data) => {
     setIsLoggedIn(data);
   };
@@ -25,8 +27,8 @@ const App = () => {
 
   if (isLoggedIn) {
     routes = (
-      // If I signup/login, then, "/auth" route does not exist in this group of routes,
-      // then I will be redirected to "/" route.
+      // If LoggedIn Data exist, page redirect is Profile page.
+      // Else, page redirect is login page.
       <Switch>
         <Route exact path='/'>
           <Home />
