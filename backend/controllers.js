@@ -14,7 +14,6 @@ module.exports = {
   registerUser: async (req, res) => {
     if (req.body) {
       const { first_name, last_name, email, password } = req.body;
-      const userTableData = [email, password, email, email];
       const userProfileData = [last_name, first_name, email, email, email];
       
       await pool.getConnection(async (err, connection) => {
@@ -35,6 +34,8 @@ module.exports = {
           
           const sha256 = require('sha256');
           const hashedPw = sha256(email + password + salt);
+
+          const userTableData = [email, hashedPw, email, email];
 
           await conn
             .execute('INSERT INTO user_t (user_name, password, created_by, updated_by) VALUES(?,?,?,?)', userTableData)
@@ -86,7 +87,7 @@ module.exports = {
 
     if (req.body) {
 
-      const {email, password } = req.body;
+      const { email, password } = req.body;
 
       console.log('user auth started')
       await pool.getConnection(async (err, connection) => {
@@ -146,6 +147,7 @@ module.exports = {
     res.send('Successfully reached GET Books endpoint');
   },
   personalizeBook: async (req, res) => {
+    console.log(req.body)
     res.send(req.query);
   },
   generateBook: async (req, res) => {

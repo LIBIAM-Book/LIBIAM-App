@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 
 import { BookContext } from '../context/BookContext';
 import Input from '../components/Input';
@@ -51,7 +52,7 @@ const FormPage = (props) => {
         isValid: false,
       },
       gender: {
-        value: '',
+        value: 0,
         isValid: false,
       },
       favThings: {
@@ -66,12 +67,12 @@ const FormPage = (props) => {
         value: '',
         isValid: false,
       },
-      favWeather: {
-        value: '',
+      favSeason: {
+        value: 0,
         isValid: false,
       },
       favTime: {
-        value: '',
+        value: 0,
         isValid: false,
       },
     },
@@ -80,6 +81,18 @@ const FormPage = (props) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
+
+    console.log(formState)
+
+    axios.post('/api/books', {
+      ...formState.inputs,
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.error(err)
+    })
   };
 
   // Pulls out only the "Name" value of the inputs.
@@ -393,27 +406,27 @@ const FormPage = (props) => {
               </div>
             </div>
 
-            {/* page favorite-weather */}
+            {/* page favorite-season */}
             <div id='page1-5' className='mt-16'>
               <h1
                 className='text-blue-500 font-barriecito 
               text-3xl tracking-wide mt-5'
               >
-                Favorite Weather
+                Favorite Season
               </h1>
               <p className='mt-2 mb-4 text-gray-400 font-light text-sm'>
-                What is your bestest weather?
+                What is your bestest season?
               </p>
 
               <div className='flex flex-row'>
                 <Input
-                  id='favWeather-1'
-                  inputGroup='favWeather'
+                  id='favSeason-1'
+                  inputGroup='favSeason'
                   element='radio'
                   type='radio'
-                  value='spring'
+                  value='0'
                   label='Spring'
-                  errorText='Please choose at least one weather!'
+                  errorText='Please choose at least one season!'
                   onInput={inputHandler}
                   radioBoxStyles='mt-0 mx-3 w-28
                   p-5 rounded-full block 
@@ -425,13 +438,13 @@ const FormPage = (props) => {
                   transform active:scale-95'
                 />
                 <Input
-                  id='favWeather-2'
-                  inputGroup='favWeather'
+                  id='favSeason-2'
+                  inputGroup='favSeason'
                   element='radio'
                   type='radio'
-                  value='summer'
+                  value='1'
                   label='Summer'
-                  errorText='Please choose at least one weather!'
+                  errorText='Please choose at least one season!'
                   onInput={inputHandler}
                   radioBoxStyles='mt-0 mx-3 w-28
                   p-5 rounded-full block 
@@ -443,13 +456,13 @@ const FormPage = (props) => {
                   transform active:scale-95'
                 />
                 <Input
-                  id='favWeather-3'
-                  inputGroup='favWeather'
+                  id='favSeason-3'
+                  inputGroup='favSeason'
                   element='radio'
                   type='radio'
-                  value='fall'
+                  value='2'
                   label='Fall'
-                  errorText='Please choose at least one weather!'
+                  errorText='Please choose at least one season!'
                   onInput={inputHandler}
                   radioBoxStyles='mt-0 mx-3 w-28
                   p-5 rounded-full block 
@@ -461,13 +474,13 @@ const FormPage = (props) => {
                   transform active:scale-95'
                 />
                 <Input
-                  id='favWeather-4'
-                  inputGroup='favWeather'
+                  id='favSeason-4'
+                  inputGroup='favSeason'
                   element='radio'
                   type='radio'
-                  value='winter'
+                  value='3'
                   label='Winter'
-                  errorText='Please choose at least one weather!'
+                  errorText='Please choose at least one season!'
                   onInput={inputHandler}
                   radioBoxStyles='mt-0 mx-3 w-28
                   p-5 rounded-full block 
@@ -499,7 +512,7 @@ const FormPage = (props) => {
                   inputGroup='favTime'
                   element='radio'
                   type='radio'
-                  value='day-time'
+                  value='0'
                   label='Day'
                   errorText='Please choose at least one weather!'
                   onInput={inputHandler}
@@ -517,7 +530,7 @@ const FormPage = (props) => {
                   inputGroup='favTime'
                   element='radio'
                   type='radio'
-                  value='night-time'
+                  value='1'
                   label='Night'
                   errorText='Please choose at least one weather!'
                   onInput={inputHandler}
@@ -553,7 +566,7 @@ const FormPage = (props) => {
             disabled:cursor-not-allowed`}
           onClick={showNameHandler}
           type='submit'
-          to='/personalized-book'
+          // to='/personalized-book'
           // disabled={!formState.formIsValid}
         >
           Create a Story
