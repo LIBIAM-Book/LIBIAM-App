@@ -147,8 +147,19 @@ module.exports = {
     res.send('Successfully reached GET Books endpoint');
   },
   personalizeBook: async (req, res) => {
-    console.log(req.body)
-    res.send(req.query);
+    console.log(req.body);
+
+    // TODO
+    // Receive User Survey Data
+
+    // Generate Authentication Token
+    // Use ENV Variables --- DO NOT HARD CODE SECRET WORD
+
+    // Send survey data with token to AI server
+
+    // Receive response and send back to user
+
+    res.send(req.body);
   },
   generateBook: async (req, res) => {
     res.send(req.query);
