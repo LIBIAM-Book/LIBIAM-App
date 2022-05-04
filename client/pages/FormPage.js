@@ -82,10 +82,30 @@ const FormPage = (props) => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    console.log(formState)
+    console.log(formState);
+
+    const {
+      name,
+      gender,
+      favThings,
+      favPlaces,
+      favColors,
+      favSeason,
+      favTime,
+    } = formState.inputs;
+
+    const surveyData = {
+      firstName: name.value,
+      gender: Number.parseInt(gender.value),
+      favThings: favThings.value,
+      favPlaces: favPlaces.value,
+      favColors: favColors.value,
+      favSeason: Number.parseInt(favSeason.value),
+      favTime: Number.parseInt(favTime.value),
+    }
 
     axios.post('/api/books', {
-      ...formState.inputs,
+      ...surveyData,
     })
     .then((res) => {
       console.log(res);
