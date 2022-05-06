@@ -28,16 +28,16 @@ const FormPage = (props) => {
   const { bookContentDispatch } = useContext(BookContext);
 
   const isOpenHandler = () => {
-    setChildName(formState.inputs.name.value);
-    let payload;
-    if (formState.inputs.name.value.toLowerCase() === 'olivia') {
-      payload = dataLoader(demoOlivia.Data);
-    } else if (formState.inputs.name.value.toLowerCase() === 'jessica') {
-      payload = dataLoader(demoJessica.Data);
-    } else {
-      payload = dataLoader(demoOlivia.Data);
-    }
-    bookContentDispatch({ type: 'LOAD_ALL', payload });
+    // setChildName(formState.inputs.name.value);
+    // let payload;
+    // if (formState.inputs.name.value.toLowerCase() === 'olivia') {
+    //   payload = dataLoader(demoOlivia.Data);
+    // } else if (formState.inputs.name.value.toLowerCase() === 'jessica') {
+    //   payload = dataLoader(demoJessica.Data);
+    // } else {
+    //   payload = dataLoader(demoOlivia.Data);
+    // }
+    // bookContentDispatch({ type: 'LOAD_ALL', payload });
 
     setIsOpen(true);
   };
