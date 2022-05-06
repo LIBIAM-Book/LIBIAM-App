@@ -53,3 +53,4 @@ Happy hacking! 💃
 - [ ] Fetch user data on Profile page
 - [ ] Style registration confirm message
 - [ ] Refactor with proper semantics and clean code
+- [ ] Update FormPage.js submit button only when form is valid

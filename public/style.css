@@ -599,6 +599,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-56 {
   margin-top: 14rem;
 }
@@ -615,16 +619,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1rem;
 }
 
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
 .mt-16 {
   margin-top: 4rem;
-}
-
-.mt-0 {
-  margin-top: 0px;
 }
 
 .mb-12 {
@@ -735,12 +731,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 50px;
 }
 
-.w-32 {
-  width: 8rem;
-}
-
 .w-28 {
   width: 7rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-24 {
@@ -873,11 +869,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
-}
-
-.bg-yellow-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
 .bg-gray-300 {
