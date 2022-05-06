@@ -39,7 +39,9 @@
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
     "regenerator-runtime": "^0.13.9",
-    "sha256": "^0.2.0"
+    "sha256": "^0.2.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

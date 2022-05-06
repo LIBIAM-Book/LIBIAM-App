@@ -7,6 +7,9 @@ const { pool } = require('./dbHelper.js');
 // console.log('Finished setting the isolation level to read committed');
 const salt = process.env.SALT;
 
+const nacl = require('tweetnacl');
+nacl.util = require('tweetnacl-util');
+
 module.exports = {
   getUser: async (req, res) => {
     res.send('Successfully reached GET User endpoint');
@@ -157,10 +160,46 @@ module.exports = {
     // Generate Authentication Token
     // Use ENV Variables --- DO NOT HARD CODE SECRET WORD
 
+    //
+    //
+    //
+
+    // utility function to display the Uint8Array
+    const asciiArmored = (arr) => nacl.util.encodeBase64(arr);
+
+    // generate the key to encrypt a message
+    const secretKey = nacl.randomBytes(32);
+    console.log(`secret key: ${asciiArmored(secretKey)}`);
+
+    // the nonce
+    const nonce = nacl.randomBytes(24);
+    console.log(`nonce: ${asciiArmored(nonce)}`);
+
+    // the message to be encrypted
+    // const message = 'some secret message with some secret credentials';
+    const message = JSON.stringify(req.body);
+    const decodedMessage = nacl.util.decodeUTF8(message);
+
+    // perform the encryption
+    const encryptedMessage = nacl.secretbox(decodedMessage, nonce, secretKey);
+    console.log(`encrypted message: ${asciiArmored(encryptedMessage)}`);
+
+    // decrypt the encrypted message
+    const originalMessage = nacl.secretbox.open(
+      encryptedMessage,
+      nonce,
+      secretKey
+    );
+
+    console.log(`decrypted message: ${nacl.util.encodeUTF8(originalMessage)}`);
+
+    //
+    //
+    //
+
     // Send survey data with token to AI server
 
     // Receive response and send back to user
-
     res.send(req.body);
   },
   generateBook: async (req, res) => {
