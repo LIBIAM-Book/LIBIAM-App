@@ -1,8 +1,26 @@
 .form_input {
-  margin-top: 2rem;
+  margin-top: 3.5rem;
+  background-color: #fce7a3;
 }
 
-.form_radio_wrapper {
-  width: 100%;
-  padding: 0 1rem;
+.radio-wrapper {
+  position: relative;
+  width: 45rem;
+  margin-top: 3.5rem;
+  justify-content: center;
+}
+
+#page1-1 .radio-wrapper {
+  margin-top: 2.5rem;
+}
+
+.radio-visibility {
+  position: absolute;
+  top: 1rem;
+}
+
+.radio-div {
+  background-color: #fce7a3;
+  width: 7rem;
+  margin: 0 2.2rem;
 }
