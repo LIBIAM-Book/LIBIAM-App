@@ -42,7 +42,8 @@ const Home = () => (
         </div>
 
         <Button
-          to='/auth'
+        // change to /auth when BookData DB feature complete
+          to='/form'
           styles='mt-6 p-3 w-48 shadow-lg
           transition ease-in-out 
           bg-white text-blue-500 

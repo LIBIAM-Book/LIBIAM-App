@@ -61,7 +61,9 @@ const Input = (props) => {
     // ⬇⬇⬇ FOR DEV CHECK PURPOSE.
     // console.log(inputState);
     onInput(value, isValid, inputGroup);
-  }, [inputGroup, id, value, isValid, onInput]);
+    // useEffect dependancies should include ALL function variables/ constants that I use inside of useEffect
+    // it's a simple rule to ensure that the data I use in useEffect is always the latest data
+  }, [inputGroup, value, isValid, onInput]);
 
   const inputChangeHandler = (event) => {
     dispatch({

@@ -51,12 +51,14 @@ const App = () => {
         <Route exact path='/'>
           <Home />
         </Route>
-        {/* <Route exact path='/form'>
+        {/* below can be deleted when Book Data DB feature complete */}
+        <Route exact path='/form'>
           <FormPage setChildName={setChildName} />
         </Route>
         <Route exact path='/personalized-book'>
           <PersonalizedBook childName={childName} />
-        </Route> */}
+        </Route>
+        {/* ------ */}
         <Route exact path='/auth'>
           <Auth />
         </Route>
