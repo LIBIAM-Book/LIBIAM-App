@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import Button from '../components/Button';
 
@@ -6,6 +7,7 @@ import './FormPage.css';
 
 const FormPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { cred } = useAuth();
 
   const isOpenHandler = () => {
     setIsOpen(true);
@@ -67,6 +69,10 @@ const FormPage = () => {
     axios
       .post('/api/books', {
         ...surveyData,
+      }, {
+        headers: {
+          'X-Access-Token': `Bearer ${cred?.accessToken}`
+        }
       })
       .then((res) => {
         console.log(res);

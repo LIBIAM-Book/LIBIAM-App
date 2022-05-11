@@ -7,6 +7,7 @@ import './Auth.css';
 
 import { useForm } from '../hooks/form-hooks';
 import { AuthContext } from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 import { useHttpClient } from '../hooks/http-hook';
 
 import Input from '../components/Input';
@@ -23,6 +24,7 @@ import ErrorMessage from '../components/ErrorMessage';
 const Auth = () => {
   const signUpMsgWrapperStyle = 'w-full h-full l-0 t-0 mt-4 text-md';
 
+  const { setCred } = useAuth();
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [showSignUpMsg, setShowSignUpMsg] = useState(false);
@@ -105,17 +107,22 @@ const Auth = () => {
     // for logging in -----------
     if (isLoginMode) {
       try {
+        const emailData = formState.inputs.email.value;
+        const pwd = formState.inputs.password.value
         axios
           .post('/api/users/auth', {
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
+            email: emailData,
+            password: pwd,
+          }, {
+            withCredentials: true,
           })
           .then((res) => {
-            console.log(res);
-            auth.login(res.data);
+            const accessToken = res?.data?.accessToken;
+
+            setCred({ email: emailData, pwd: pwd, accessToken: accessToken });
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
           });
       } catch (err) {}
     }
@@ -148,7 +155,7 @@ const Auth = () => {
             setSignUpMsg(signUpFailedMsg(errMsg));
           });
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   };

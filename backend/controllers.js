@@ -1,14 +1,14 @@
+const jwt = require("jsonwebtoken");
 const GridRowsColumns = require('autoprefixer/lib/hacks/grid-rows-columns');
 const { pool } = require('./dbHelper.js');
-//const hashing = require(path.join(__dirname, 'backend', 'hashing.js'));
+
 /*** MySQL query for setting isolation level to READ COMMITED for avoiding potential data race ***/
 
 // await connection.execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
 // console.log('Finished setting the isolation level to read committed');
 const salt = process.env.SALT;
 
-const nacl = require('tweetnacl');
-nacl.util = require('tweetnacl-util');
+const { default: axios } = require('axios');
 
 module.exports = {
   getUser: async (req, res) => {
@@ -130,7 +130,21 @@ module.exports = {
               // logged in successfully
               console.log('logged in successfully! ');
 
-              return res.status(200).send('logged in successfully');
+              let token;
+              try {
+                //Creating jwt token
+                token = jwt.sign(
+                  { userId: rows[0].id, user_name: email },
+                  process.env["JWT_SECRET_KEY"],
+                  { expiresIn: "1h" }
+                );
+              } catch (err) {
+                console.error(err);
+                const error = new Error("Error! Something went wrong.");
+                return res.status(500).send("Token was not created successfully");
+              }
+
+              return res.status(200).send({ message: 'logged in successfully', accessToken: token });
             } else {
               // password not matched
               console.log('password not matched!');
@@ -155,52 +169,24 @@ module.exports = {
     // TODO
 
     // Receive User Survey Data
-    console.log(req.body);
+    const surveyData = req.body;
+    const token = req.headers['x-access-token']
 
-    // Generate Authentication Token
-    // Use ENV Variables --- DO NOT HARD CODE SECRET WORD
-
-    //
-    //
-    //
-
-    // utility function to display the Uint8Array
-    const asciiArmored = (arr) => nacl.util.encodeBase64(arr);
-
-    // generate the key to encrypt a message
-    const secretKey = nacl.randomBytes(32);
-    console.log(`secret key: ${asciiArmored(secretKey)}`);
-
-    // the nonce
-    const nonce = nacl.randomBytes(24);
-    console.log(`nonce: ${asciiArmored(nonce)}`);
-
-    // the message to be encrypted
-    // const message = 'some secret message with some secret credentials';
-    const message = JSON.stringify(req.body);
-    const decodedMessage = nacl.util.decodeUTF8(message);
-
-    // perform the encryption
-    const encryptedMessage = nacl.secretbox(decodedMessage, nonce, secretKey);
-    console.log(`encrypted message: ${asciiArmored(encryptedMessage)}`);
-
-    // decrypt the encrypted message
-    const originalMessage = nacl.secretbox.open(
-      encryptedMessage,
-      nonce,
-      secretKey
-    );
-
-    console.log(`decrypted message: ${nacl.util.encodeUTF8(originalMessage)}`);
-
-    //
-    //
-    //
-
-    // Send survey data with token to AI server
-
-    // Receive response and send back to user
-    res.send(req.body);
+    return axios.post(`${process.env.AI_SERVER}/nlg`, {
+      ...surveyData
+    }, {
+      headers: {
+        'x-access-token': token
+      },
+    })
+      .then((pyRes) => {
+        console.log(pyRes.data);
+        res.status(200).send(pyRes.data)
+      })
+      .catch((err) => {
+        console.error(err.message);
+        res.status(500).send(err.message)
+      })
   },
   generateBook: async (req, res) => {
     res.send(req.query);
