@@ -33,7 +33,7 @@ const FormPage = (props) => {
     setIsOpen(true);
   };
 
-  // DEV PURPOSE. WILL MIGRATE TO formSubmitHandler.
+  // DEV PURPOSE. Content MIGRATED TO formSubmitHandler.
   const testHandler = (e) => {
     e.preventDefault();
     // Loading start
@@ -65,6 +65,10 @@ const FormPage = (props) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
+
+    // Loading start
+    console.log('Loading msg start: creating your book...');
+    //
 
     // collect survey data
     let name = event.target.name.value;
@@ -115,6 +119,8 @@ const FormPage = (props) => {
       favTime: favTime,
     };
 
+    setChildName(name);
+
     // Send survey data
     axios
       .post(
@@ -130,6 +136,15 @@ const FormPage = (props) => {
       )
       .then((res) => {
         console.log(res);
+        // book content dispatch
+        let payload;
+        payload = dataLoader(res.Data);
+        // payload = dataLoader(res.Data);
+        bookContentDispatch({ type: 'LOAD_ALL', payload });
+
+        // Loading end && move to book page
+        console.log('Loading msg end: will redirect to book page');
+        setBookRendered('redirect to book page');
       })
       .catch((err) => {
         console.error(err);
@@ -141,7 +156,10 @@ const FormPage = (props) => {
 
   return (
     <React.Fragment>
-      <form className='flex items-center flex-col pb-20' onSubmit={testHandler}>
+      <form
+        className='flex items-center flex-col pb-20'
+        onSubmit={formSubmitHandler}
+      >
         {/* Page 1-1 */}
         <div id='page1-1'>
           <h1 className='text-blue-500 font-barriecito text-4xl mt-56'>
