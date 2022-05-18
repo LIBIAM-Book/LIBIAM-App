@@ -7,31 +7,31 @@ const initialData = {
     id: 0,
     pageType: '',
     Text: '',
-    MediaImgUris: [],
+    MediaImgUris: 'demo/book2.jpg',
   },
   firstPage: {
     id: 1,
     pageType: '',
     Text: '',
-    MediaImgUris: [],
+    MediaImgUris: 'demo/book2.jpg',
   },
   secondPage: {
     id: 2,
     pageType: '',
     Text: '',
-    MediaImgUris: [],
+    MediaImgUris: 'demo/book2.jpg',
   },
   thirdPage: {
     id: 3,
     pageType: '',
     Text: '',
-    MediaImgUris: [],
+    MediaImgUris: 'demo/book2.jpg',
   },
   end: {
     id: 4,
     pageType: '',
     Text: '',
-    MediaImgUris: [],
+    MediaImgUris: 'demo/book2.jpg',
   },
 };
 

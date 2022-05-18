@@ -4,11 +4,13 @@ import Button from '../components/Button';
 import Card from '../components/Card';
 import UserBookList from '../components/UserBookList';
 import { AuthContext } from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 import './Profile.css';
 
 const Profile = () => {
   const auth = useContext(AuthContext);
+  const { setCred } = useAuth();
   const [userBooks, setUserBooks] = useState();
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const Profile = () => {
           <h2>My Account</h2>
           <h3>USER NAME</h3>
           {/* {auth.isLoggedIn && ( */}
-          <Button auth onClick={auth.logout}>
+          <Button auth onClick={() => setCred({})}>
             Logout
           </Button>
           {/* )} */}

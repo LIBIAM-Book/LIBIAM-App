@@ -1,20 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import Button from '../components/Button';
+import { BookContext } from '../context/BookContext';
 
 import './FormPage.css';
 
-const FormPage = () => {
+import testData from '../mockData/test.json';
+
+const dataLoader = (data) => {
+  const formattedData = {
+    cover: data[0],
+    firstPage: data[1],
+    secondPage: data[2],
+    thirdPage: data[3],
+    end: data[4],
+  };
+
+  return formattedData;
+};
+
+const FormPage = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { cred } = useAuth();
+  const [bookRendered, setBookRendered] = useState(false);
+  const { setChildName } = props;
+
+  const { bookContentDispatch } = useContext(BookContext);
 
   const isOpenHandler = () => {
     setIsOpen(true);
   };
 
+  // DEV PURPOSE. Content MIGRATED TO formSubmitHandler.
+  const testHandler = (e) => {
+    e.preventDefault();
+    // Loading start
+    console.log('Loading msg start: creating your book...');
+
+    setChildName(e.target.name.value);
+
+    axios
+      .get('/api/books')
+      .then((res) => {
+        // book content dispatch
+        let payload;
+        payload = dataLoader(testData.Data);
+        // payload = dataLoader(res.Data);
+        bookContentDispatch({ type: 'LOAD_ALL', payload });
+
+        // Loading end && move to book page
+        console.log('Loading msg end: will redirect to book page');
+        setBookRendered('redirect to book page');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // 데이터 받는동안 로딩 메세지(creating your book 메세지)
+    // 데이터 북컨텐트 디스패치 하고
+    // 로딩 끝내고 책 페이지로 이동
+  };
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
+
+    // Loading start
+    console.log('Loading msg start: creating your book...');
+    //
 
     // collect survey data
     let name = event.target.name.value;
@@ -65,17 +119,32 @@ const FormPage = () => {
       favTime: favTime,
     };
 
+    setChildName(name);
+
     // Send survey data
     axios
-      .post('/api/books', {
-        ...surveyData,
-      }, {
-        headers: {
-          'X-Access-Token': `Bearer ${cred?.accessToken}`
+      .post(
+        '/api/books',
+        {
+          ...surveyData,
+        },
+        {
+          headers: {
+            'X-Access-Token': `Bearer ${cred?.accessToken}`,
+          },
         }
-      })
+      )
       .then((res) => {
         console.log(res);
+        // book content dispatch
+        let payload;
+        payload = dataLoader(res.Data);
+        // payload = dataLoader(res.Data);
+        bookContentDispatch({ type: 'LOAD_ALL', payload });
+
+        // Loading end && move to book page
+        console.log('Loading msg end: will redirect to book page');
+        setBookRendered('redirect to book page');
       })
       .catch((err) => {
         console.error(err);
@@ -437,6 +506,7 @@ const FormPage = () => {
           Create a Story
         </Button>
       </form>
+      {bookRendered && <Redirect to='/personalized-book' />}
     </React.Fragment>
   );
 };

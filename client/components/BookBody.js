@@ -22,7 +22,6 @@ const BookBody = (props) => {
 
   // Extract data
   const { Text, MediaImgUris } = bookContent[pageStateKey];
-  const bgImg = MediaImgUris[0];
 
   // Update book story
   const handleChange = (e) => {
@@ -50,7 +49,7 @@ const BookBody = (props) => {
       <div className='shadow-xl'>
         <div
           style={{
-            backgroundImage: `url(https://libiam.s3.us-west-1.amazonaws.com/${bgImg})`,
+            backgroundImage: `url(https://libiam.s3.us-west-1.amazonaws.com/${MediaImgUris})`,
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',

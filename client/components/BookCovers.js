@@ -23,7 +23,6 @@ const BookCovers = (props) => {
 
   // Extract data
   const { Text, MediaImgUris } = bookContent[pageStateKey];
-  const bgImg = MediaImgUris[0];
 
   // Update title or ending comment
   const handleChange = (e) => {
@@ -34,7 +33,7 @@ const BookCovers = (props) => {
   return (
     <div
       style={{
-        backgroundImage: `url(https://libiam.s3.us-west-1.amazonaws.com/${bgImg})`,
+        backgroundImage: `url(https://libiam.s3.us-west-1.amazonaws.com/${MediaImgUris})`,
         backgroundSize: '100% 100%',
       }}
       className='w-96 h-tall min-w-80 min-h-96 shadow-xl'
